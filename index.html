@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>UglyGoofyAhhBluds.com</title>
+        <link rel="icon" href="favicon.png">
+    </head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center; 
+            background-color: black; 
+            flex-direction: column;
+        }
+        body * {
+            margin: 0 auto;
+            max-width: 100%;
+        }
+        h1 {
+            color: yellow;
+        }
+    </style>
+    <body>
+        <audio src="clicktheblud.mp3"></audio>
+        <img src="ugly.jpg">
+        <canvas width="600" height="800"></canvas>
+        <h1>Bluds clicked: <output>0</output></h1>
+    </body>
+    <script defer>
+        const canvas = document.querySelector('canvas').getContext('2d'),
+        width = canvas.canvas.width,
+        height = canvas.canvas.height,
+        image = document.querySelector('img'),
+        audio = document.querySelector('audio'),
+        output = document.querySelector('output');
+        let bludsClicked = 0;
+        canvas.fillStyle = 'black';
+        canvas.fillRect(0, 0, width, height);
+        try {
+            image.decode().then(()=>{
+                theDude = {
+                    cropX: image.naturalWidth / 2 - 100,
+                    cropY: 50,
+                    cropWidth: 200,
+                    cropHeight: 300,
+                    scale: 0.6,
+                    get centerX() {
+                        return theDude.scale * theDude.cropWidth / 2;
+                    },
+                    get centerY() {
+                        return theDude.scale * theDude.cropHeight / 2
+                    },
+                };
+                console.log(theDude);
+                /*shucks was made by a 12 year old
+                What?????*/
+                function makeADude() {
+                    canvas.drawImage(
+                        image,
+                        theDude.cropX,
+                        theDude.cropY,
+                        theDude.cropWidth,
+                        theDude.cropHeight,
+                        (canvas.canvas.width - theDude.centerX) * Math.random(),
+                        (canvas.canvas.height - theDude.centerY) * Math.random(),
+                        theDude.cropWidth* theDude.scale,
+                        theDude.cropHeight * theDude.scale,
+                    )
+                }
+                canvas.canvas.addEventListener('pointerdown', ()=>{
+                    audio.currentTime = 0;
+                    canvas.clearRect(0, 0, width, height);
+                    bludsClicked++;
+                    output.textContent = bludsClicked;
+                    if (bludsClicked > 20) {
+                        window.open('win.html', '_blank', 'popup=true,width=140,height=80,left=200,top=400');
+                        return;
+                    } 
+                    makeADude();
+                    audio.play();
+                })
+            })
+        } catch (error) {
+            console.error(error);
+            canvas.fillStyle = 'white',
+            canvas.fillText('Oh noes! There was a oopsie daisies with the canvas, heres the error >~<', 0, 10, width);
+            canvas.fillStyle = 'red';
+            canvas.fillText(error, 0, 30, width);
+            canvas.fillStyle = 'white';
+        }
+    </script>
+</html>
