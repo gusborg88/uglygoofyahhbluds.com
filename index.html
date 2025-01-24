@@ -7,8 +7,8 @@
     <style>
         body {
             display: flex;
-            justify-content: center; 
-            background-color: black; 
+            justify-content: center;
+            background-color: black;
             flex-direction: column;
         }
         body * {
@@ -26,63 +26,102 @@
         <h1>Bluds clicked: <output>0</output></h1>
     </body>
     <script defer>
-        const canvas = document.querySelector('canvas').getContext('2d'),
-        width = canvas.canvas.width,
-        height = canvas.canvas.height,
-        image = document.querySelector('img'),
-        audio = document.querySelector('audio'),
-        output = document.querySelector('output');
+        const canvasElement = document.querySelector('canvas');
+        const canvas = canvasElement.getContext('2d');
+        const width = canvas.canvas.width;
+        const height = canvas.canvas.height;
+        const image = document.querySelector('img');
+        const audio = document.querySelector('audio');
+        const output = document.querySelector('output');
         let bludsClicked = 0;
+        let imageBounds = {};
         canvas.fillStyle = 'black';
         canvas.fillRect(0, 0, width, height);
+
         try {
-            image.decode().then(()=>{
-                theDude = {
+            image.decode().then(() => {
+                const theDude = {
                     cropX: image.naturalWidth / 2 - 100,
                     cropY: 50,
                     cropWidth: 200,
                     cropHeight: 300,
                     scale: 0.6,
-                    get centerX() {
-                        return theDude.scale * theDude.cropWidth / 2;
+                    get width() {
+                        return this.cropWidth * this.scale;
                     },
-                    get centerY() {
-                        return theDude.scale * theDude.cropHeight / 2
-                    },
+                    get height() {
+                        return this.cropHeight * this.scale;
+                    }
                 };
-                console.log(theDude);
-                /*shucks was made by a 12 year old
-                What?????*/
+
                 function makeADude() {
+                    const randomX = Math.random() * (canvas.canvas.width - theDude.width);
+                    const randomY = Math.random() * (canvas.canvas.height - theDude.height);
+                    canvas.clearRect(0, 0, width, height);
                     canvas.drawImage(
                         image,
                         theDude.cropX,
                         theDude.cropY,
                         theDude.cropWidth,
                         theDude.cropHeight,
-                        (canvas.canvas.width - theDude.centerX) * Math.random(),
-                        (canvas.canvas.height - theDude.centerY) * Math.random(),
-                        theDude.cropWidth* theDude.scale,
-                        theDude.cropHeight * theDude.scale,
-                    )
+                        randomX,
+                        randomY,
+                        theDude.width,
+                        theDude.height
+                    );
+
+                    imageBounds = {
+                        x: randomX,
+                        y: randomY,
+                        width: theDude.width,
+                        height: theDude.height,
+                    };
                 }
-                canvas.canvas.addEventListener('pointerdown', ()=>{
-                    audio.currentTime = 0;
-                    canvas.clearRect(0, 0, width, height);
-                    bludsClicked++;
-                    output.textContent = bludsClicked;
-                    if (bludsClicked > 20) {
-                        window.open('win.html', '_blank', 'popup=true,width=140,height=80,left=200,top=400');
-                        return;
-                    } 
-                    makeADude();
-                    audio.play();
-                })
-            })
+
+                function isClickInsideImage(x, y) {
+                    return (
+                        x >= imageBounds.x &&
+                        x <= imageBounds.x + imageBounds.width &&
+                        y >= imageBounds.y &&
+                        y <= imageBounds.y + imageBounds.height
+                    );
+                }
+
+                makeADude();
+
+                canvas.canvas.addEventListener('pointerdown', (event) => {
+                    const rect = canvas.canvas.getBoundingClientRect();
+                    const clickX = event.clientX - rect.left;
+                    const clickY = event.clientY - rect.top;
+
+                    if (isClickInsideImage(clickX, clickY)) {
+                        audio.currentTime = 0;
+                        bludsClicked++;
+                        output.textContent = bludsClicked;
+
+                        if (bludsClicked > 20) {
+                            window.open(
+                                'win.html',
+                                '_blank',
+                                'popup=true,width=140,height=80,left=200,top=400'
+                            );
+                            return;
+                        }
+
+                        makeADude();
+                        audio.play();
+                    }
+                });
+            });
         } catch (error) {
             console.error(error);
-            canvas.fillStyle = 'white',
-            canvas.fillText('Oh noes! There was a oopsie daisies with the canvas, heres the error >~<', 0, 10, width);
+            canvas.fillStyle = 'white';
+            canvas.fillText(
+                'Oh noes! There was a oopsie daisies with the canvas, here’s the error >~<',
+                0,
+                10,
+                width
+            );
             canvas.fillStyle = 'red';
             canvas.fillText(error, 0, 30, width);
             canvas.fillStyle = 'white';
