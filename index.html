@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>UglyGoofyAhhBluds.com</title>
         <link rel="icon" href="favicon.png">
@@ -21,88 +21,68 @@
     </style>
     <body id="body">
         <audio src="clicktheblud.mp3"></audio>
-        <img src="images/ugly.jpg">
-        <canvas id="canvas" width="600" height="800"></canvas>
+        <img src="images/ugly.jpg" alt="this blud really so ugly (goofy ahh)">
+        <section id="blud-area" style="width: 100%; height: 40rem; margin-top: 5rem; position: relative; overflow: hidden;"></section>
         <h1>Bluds clicked: <output>0</output></h1>
     </body>
     <script defer>
-        const canvas = document.querySelector('canvas').getContext('2d'),
-        width = canvas.canvas.width,
-        height = canvas.canvas.height,
-        image = document.querySelector('img'),
-        audio = document.querySelector('audio'),
+
+        const audio = document.querySelector('audio');
         output = document.querySelector('output');
         let bludsClicked = 0;
-        canvas.fillStyle = 'black';
-        canvas.fillRect(0, 0, width, height);
-        try {
-            image.decode().then(()=>{
-                theDude = {
-                    cropX: image.naturalWidth / 2 - 100,
-                    cropY: 50,
-                    cropWidth: 200,
-                    cropHeight: 300,
-                    scale: 0.6,
-                    get centerX() {
-                        return theDude.scale * theDude.cropWidth / 2;
-                    },
-                    get centerY() {
-                        return theDude.scale * theDude.cropHeight / 2
-                    },
-                };
-                console.log(theDude);
-                /*
-                shucks was made by a 12 year old
 
-                What?????
+        const bludArea = document.getElementById("blud-area");
 
-                         (\-.
-                         / _`>
-                 _)     / _)==3 --- eminem -->
-                (      / _/
-                 `-.__(___)_
-                */
-                function makeADude() {
-                    canvas.drawImage(
-                        image,
-                        theDude.cropX,
-                        theDude.cropY,
-                        theDude.cropWidth,
-                        theDude.cropHeight,
-                        (canvas.canvas.width - theDude.centerX) * Math.random(),
-                        (canvas.canvas.height - theDude.centerY) * Math.random(),
-                        theDude.cropWidth* theDude.scale,
-                        theDude.cropHeight * theDude.scale,
-                    )
+        function createBlud () {
+            const bludCheck = document.getElementById("blud") || null;
+            if(bludCheck) {
+                bludArea.removeChild(bludCheck);
+            }
+
+            const blud = document.createElement("img");
+            blud.id = "blud";
+            blud.src = "images/ugly.jpg";
+            blud.alt = "this blud so ugly goofy ahh";
+
+            const areaWidth = window.innerWidth;
+            const areaHeight = window.innerHeight;
+
+            const randomWidth = randomInRange(5, areaWidth);
+            const randomHeight = randomInRange(5, areaHeight);
+
+            const bludScale = 3;
+
+            blud.style.width = `${randomWidth / bludScale}px`;
+            blud.style.height = `${randomHeight / bludScale}px`;
+
+            blud.style.position = "absolute";
+            blud.style.top = `${randomWidth / bludScale}px`;
+            blud.style.left = `${randomHeight}px`;
+            blud.style.transform = "translate(100%)";
+
+            blud.style.cursor = "pointer";
+            blud.addEventListener('click', () => {
+                createBlud();
+                bludsClicked++;
+                output.textContent = String(bludsClicked);
+                audio.play();
+
+                if (bludsClicked % 7 === 0) {
+                    window.open('jumpscare.html', '_blank', `popup=true,width=${areaWidth / bludScale},height=${areaHeight / bludScale},left=${randomWidth},top=${randomHeight}`);
                 }
-                canvas.canvas.addEventListener('pointerdown', ()=>{
-                    audio.currentTime = 0;
-                    canvas.clearRect(0, 0, width, height);
-                    bludsClicked++;
-                    output.textContent = bludsClicked;
-                    const windowWidth = window.innerWidth;
-                    const windowHeight = window.innerHeight;
-                    const randomX = Math.floor(Math.random() * windowWidth);
-                    const randomY = Math.floor(Math.random() * windowHeight);
-                    const jumpScale = 3;
-                    if (bludsClicked % 7 === 0) {
-                        window.open('jumpscare.html', '_blank', `popup=true,width=${windowWidth / jumpScale},height=${windowHeight / jumpScale},left=${randomX},top=${randomY}`);
-                    }
-                    if (bludsClicked > 20) {
-                        window.open('win.html', '_blank', 'popup=true,width=140,height=80,left=200,top=400');
-                        return;
-                    }
-                    makeADude();
-                    audio.play();
-                })
+                if (bludsClicked >= 20) {
+                    window.open('win.html', '_blank', 'popup=true,width=140,height=80,left=200,top=400');
+                }
             })
-        } catch (error) {
-            console.error(error);
-            canvas.fillStyle = 'white',
-            canvas.fillText('Oh noes! There was a oopsie daisies with the canvas, heres the error >~<', 0, 10, width);
-            canvas.fillStyle = 'red';
-            canvas.fillText(error, 0, 30, width);
-            canvas.fillStyle = 'white';
+
+            bludArea.appendChild(blud);
         }
+
+        createBlud();
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
     </script>
 </html>
