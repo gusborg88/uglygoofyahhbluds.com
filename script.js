@@ -25,11 +25,11 @@ try {
     const theDude = new ClickableGuy(
         canvas,
         image,
-        image.naturalWidth / 2 - 100,
-        50,
-        200,
-        300,
-        0.6
+        image.naturalWidth / 2 - 133,
+        65,
+        260,
+        420,
+        0.45
     );
     canvas.fillStyle = 'red';
     image.decode().then(()=>{
