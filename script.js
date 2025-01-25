@@ -30,12 +30,12 @@ try {
         200,
         300,
         0.6
-    )
+    );
     canvas.fillStyle = 'red';
     image.decode().then(()=>{
         canvas.fillText('click me', theDude.canvasX, theDude.canvasY);
         canvas.fillStyle = 'black';
-        theDude.respawnRandom(canvas)
+        theDude.respawnRandom(canvas);
         canvas.canvas.addEventListener('pointerdown', (event)=>{
             const time = performance.now();
             if (inHitbox(event, theDude.hitbox)) {
@@ -47,7 +47,7 @@ try {
                         bludsClicked = 0;
                         note.textContent = 'You fucking cheater';
                         document.querySelector('canvas').remove();
-                        window.open('cheating.html', '_blank', 'popup,width=640,height=360,left=0,top=0');
+                        window.open('cheating.html', 'cheaterPopup', 'popup,width=640,height=360,left=0,top=0');
                     }
                     if (bludsClicked > rating) {
                         note.textContent = comment;
@@ -61,9 +61,9 @@ try {
                 theDude.respawnRandom(canvas);
             }
             if (bludsClicked === 20 || bludsClicked === 200 || bludsClicked === 2000) {
-                window.open('win.html', '_blank', 'popup=true,width=140,height=80,left=200,top=400');
+                window.open('win.html', 'winPopup', 'popup=true,width=140,height=80,left=200,top=400');
             }
-        })
+        });
     });
     /*shucks was made by a 12 year old
     What?????*/

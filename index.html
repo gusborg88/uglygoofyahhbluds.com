@@ -7,6 +7,20 @@
         <script src="script.js" type="module"></script>
     </head>
     <style>
+        :root::-webkit-scrollbar{
+            display: none;
+        }
+        :root {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            margin-bottom: 20%;
+        }
         body {
             color: yellow;
             display: flex;
@@ -26,10 +40,32 @@
     </style>
     <body>
         <audio src="clicktheblud.mp3"></audio>
-        <img src="ugly.jpg">
+        <img src="ugly.png" class="center" id="ugly">
+        <img src="gone.png" class="center" id="gone" style="display: none">
         <canvas width="600" height="800"></canvas>
         <h1>Bluds clicked: <output>0</output> <span id="note"></span></h1>
         <label style="rotate: -1deg">you blud speed:  slow<input disabled type="range">fast</label>
         <a style="color: gray" href="https://twitter.com/gusborg8">contact the owner</a>
     </body>
+    <script>
+        // 25% chance to make blud disappear when offscreen
+        const image = document.getElementById('ugly'),
+        gone = document.getElementById('gone');
+
+        let rollForGone = true;
+        document.addEventListener('scroll', () => {
+            let rect = image.getBoundingClientRect();
+
+            if (rect.bottom <= -1 && rollForGone) {
+                if (Math.random() < 0.25) {
+                    image.style.display = 'none';
+                    gone.style.display = 'block';
+                }
+                rollForGone = false;
+            }
+            else if (rect.bottom > 1 && !rollForGone) {
+                rollForGone = true;
+            }
+        });
+    </script>
 </html>
