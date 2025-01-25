@@ -1,0 +1,28 @@
+<body style="background-color: black; margin: 0">
+<video src="cheating.mp4" style="width: 100%; height: 100svh;" autoplay></video>
+<script>
+window.addEventListener('focus',()=>{
+    document.querySelector('video').play();
+})
+/*this is copied from my smi le dog website view-source:https://gusborg88.github.io/spread-the-word/popup.html*/
+let movingLeft = true;
+let movingUp = true;
+let oldTime = 0;
+function circle(time) {
+    amount = (time - oldTime) / 4;
+    if (screen.availHeight < screenY + outerHeight + 10) {
+        movingUp = false
+    } else if (screenY == 0) {
+        movingUp = true;
+    }
+    if (screen.availWidth < screenX + outerHeight + 10) {
+        movingLeft = false
+    } else if (screenX == 0) {
+        movingLeft = true;
+    }
+    window.moveBy(movingLeft ? amount: -amount, movingUp ? amount: -amount);
+    oldTime = time;
+    requestAnimationFrame(circle);
+}
+requestAnimationFrame(circle);
+</script>
