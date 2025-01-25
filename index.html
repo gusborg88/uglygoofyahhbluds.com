@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width: device-width">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>UglyGoofyAhhBluds.com</title>
         <link rel="icon" href="favicon.png">
-        <script src="script.js" type="module"></script>
     </head>
+
     <style>
         :root::-webkit-scrollbar{
             display: none;
@@ -18,11 +19,12 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
+        }
+        .blud {
             width: 50%;
-            margin-bottom: 20%;
+            margin-bottom: 20vmax;
         }
         body {
-            color: yellow;
             display: flex;
             justify-content: center; 
             background-color: black; 
@@ -32,21 +34,80 @@
             margin: 0 auto;
             max-width: 100%;
         }
+        #clicktheblud {
+            display: block;
+            position: relative;
+            width: max(90vmin, 250px);
+            height: max(90vmin, 250px);
+            border-radius: 1vmin;
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgb(11, 11, 0);
+            margin: auto;
+            margin-bottom: max(2vmin, 8px);
+            overflow: hidden;
+        }
+        .clicktextdiv {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            left: 1vmin;
+            bottom: 1vmin;
+            width: calc(100% - 2vmin);
+            pointer-events: none;
+        }
+        .clicktext {
+            color: yellow;
+            pointer-events: none;
+
+            z-index: 1;
+
+            left: 1vmin;
+            bottom: 1vmin;
+            width: calc(100% - 2vmin);
+            text-align: center; /* set to "left" once speedometer is implemented!!! */
+
+            font-size: max(4vmin, 17px);
+        }
+        .clicktext2 {
+            text-align: center;
+            font-size: max(3vmin, 14px);
+        }
         #note {
+            pointer-events: none;
+
             font-family: cursive;
-            font-size: small;
+            font-size: max(1.5vmin, 13px);
             color: red;
+            vertical-align: text-bottom;
         }
     </style>
+    
     <body>
-        <audio src="clicktheblud.mp3"></audio>
-        <img src="ugly.png" class="center" id="ugly">
-        <img src="gone.png" class="center" id="gone" style="display: none">
-        <canvas width="600" height="800"></canvas>
-        <h1>Bluds clicked: <output>0</output> <span id="note"></span></h1>
-        <label style="rotate: -1deg">you blud speed:  slow<input disabled type="range">fast</label>
-        <a style="color: gray" href="https://twitter.com/gusborg8">contact the owner</a>
+        <audio src="clicktheblud.mp3" id="clickAudio"></audio>
+        <img src="ugly.png" class="center blud" id="ugly">
+        <img src="gone.png" class="center blud" id="gone" style="display: none">
+
+        <div id="clicktheblud" class="center">
+            <div class = "clicktextdiv"> 
+                <h1 class="clicktext">Bluds clicked: <output>0</output> <span id="note"></span></h1>
+                            <!-- 
+                no speedometer yet.. 
+                uncomment this when this is implemented
+                -->
+                <label class ="clicktext2 clicktext">
+                    you blud speed: slow 
+                    <input disabled style="width: max(30vmin, 80px)" type="range" id="speedometer">
+                    fast 
+                </label>
+                
+            </div>
+        </div>
+        
+        <a style="color: gray; font-size: max(2vmin, 14px); margin-bottom: 2vmin;" href="https://twitter.com/gusborg8">contact the owner</a>
+        <script src="clicktheblud.js" type="module"></script>
     </body>
+
     <script>
         // 25% chance to make blud disappear when offscreen
         const image = document.getElementById('ugly'),
@@ -56,14 +117,14 @@
         document.addEventListener('scroll', () => {
             let rect = image.getBoundingClientRect();
 
-            if (rect.bottom <= -1 && rollForGone) {
-                if (Math.random() < 0.25) {
+            if (rect.bottom <= -10 && rollForGone) {
+                if (Math.random() < 0.1) {
                     image.style.display = 'none';
                     gone.style.display = 'block';
                 }
                 rollForGone = false;
             }
-            else if (rect.bottom > 1 && !rollForGone) {
+            else if (rect.bottom > 10 && !rollForGone) {
                 rollForGone = true;
             }
         });

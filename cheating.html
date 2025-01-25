@@ -4,7 +4,13 @@
 window.addEventListener('focus',()=>{
     document.querySelector('video').play();
 })
-/*this is copied from my smi le dog website view-source:https://gusborg88.github.io/spread-the-word/popup.html*/
+
+/*this is copied from my smi le dog website view-source: https://github.com/gusborg88/spread-the-word/blob/main/popup.html
+ this doesn't work when the window isnt on the primary display(?)
+ if the popup appears on a second monitor, it'll get stuck
+ (maybe only a thing with monitors of different resolutions)
+*/
+
 let movingLeft = true;
 let movingUp = true;
 let oldTime = 0;
@@ -15,7 +21,7 @@ function circle(time) {
     } else if (screenY == 0) {
         movingUp = true;
     }
-    if (screen.availWidth < screenX + outerHeight + 10) {
+    if (screen.availWidth < screenX + outerWidth + 10) {
         movingLeft = false
     } else if (screenX == 0) {
         movingLeft = true;
