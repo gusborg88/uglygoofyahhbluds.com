@@ -5,6 +5,7 @@ blud.style.position = 'relative';
 blud.style.width = 'max(10vmin, 30px)';
 blud.style.height = 'auto';
 blud.style['user-select'] = 'none';
+blud.style['-webkit-user-select'] = 'none';
 bludzone.appendChild(blud);
 
 const image = document.getElementById('ugly'),
