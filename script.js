@@ -1,4 +1,4 @@
-import ClickableGuy from "./clickableGuy.mjs";
+import ClickableGuy from "./ClickableGuy.js";
 
 const canvas = document.querySelector('canvas').getContext('2d'),
 width = canvas.canvas.width,
