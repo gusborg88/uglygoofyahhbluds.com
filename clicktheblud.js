@@ -6,6 +6,8 @@ blud.style.width = 'max(10vmin, 30px)';
 blud.style.height = 'auto';
 blud.style['user-select'] = 'none';
 blud.style['-webkit-user-select'] = 'none';
+blud.style['-webkit-touch-callout'] = 'none';
+
 bludzone.appendChild(blud);
 
 const image = document.getElementById('ugly'),
@@ -26,8 +28,7 @@ ratings = [
 
 audio.preservesPitch = false;
 
-let bludsClicked = 0, uneditedBludsClicked = 0,
-lastClickTime = 0, secondLastClickTime = 0,
+let bludsClicked = 0, uneditedBludsClicked = 0, lastClickTime = 0,
 edited = false, cheated = false;
 
 /*
@@ -96,6 +97,7 @@ function bludLogic(event) {
     }
 }
 
+blud.ontouchstart = bludLogic;
 blud.onmousedown = bludLogic;
 
 /*
