@@ -4,6 +4,7 @@ blud.src = 'blud_clickable.png';
 blud.style.position = 'relative';
 blud.style.width = 'max(10vmin, 30px)';
 blud.style.height = 'auto';
+blud.style['user-select'] = 'none';
 bludzone.appendChild(blud);
 
 const image = document.getElementById('ugly'),
